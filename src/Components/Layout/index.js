@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import Loader from "react-loader-spinner";
 import { Layout } from "antd";
 import { getData } from "../../Redux/Actions/actions";
 import CardGroup from "../Utilities/CardGrouup";
@@ -11,6 +12,7 @@ const AppLayout = (props) => {
         brandFilter,
         categoryFilter,
         genderFilter,
+        loader,
         filterOptions } = props;
 useEffect(()=>{
     getProductsData();
@@ -54,7 +56,18 @@ return(
                 filterProducts={filterProducts}
             />
         </Sider>
-        <Content style={{minHeight: '78vh'}}>{products.length && <CardGroup products={filteredProducts.length ===0 ? products : filteredProducts}/> }</Content>
+        <Content style={{minHeight: '90vh'}}>
+            {loader && <div style={{display: "flex", justifyContent:"center", alignItems:"center", height: '100vh'}}>
+                <Loader
+                    type="Puff"
+                    color="#dcdcdc"
+                    height={100}
+                    width={100}
+                    visible={loader}
+                />
+            </div>}
+            {products.length && <CardGroup products={filteredProducts.length ===0 ? products : filteredProducts}/> }
+            </Content>
       </Layout>
     </Layout>
     </div>
@@ -63,13 +76,14 @@ return(
 };
 
 const mapStateToProps = (state) => {
-   const { products, filterOptions, brandFilter, categoryFilter, genderFilter  } = state.projectReducer;
+   const { products, filterOptions, brandFilter, categoryFilter, genderFilter, loader  } = state.projectReducer;
     return {
         products,
         brandFilter,
         categoryFilter,
         genderFilter,
-        filterOptions
+        filterOptions,
+        loader,
     }
 }; 
 

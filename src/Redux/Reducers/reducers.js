@@ -8,7 +8,8 @@ const initialState ={
     filterOptions: ['Brand', 'Category', 'Gender' ],
     brandFilter: [],
     categoryFilter: [],
-    genderFilter: []
+    genderFilter: [],
+    loader: true,
 }
 
 
@@ -22,8 +23,8 @@ export default function (state =initialState,action){
                     sortOptions: action.payload.sortOptions,
                     brandFilter: transformFilter(action.payload.products, 'brand'),
                     categoryFilter: transformFilter(action.payload.products, 'category'),
-                    genderFilter: transformFilter(action.payload.products, 'gender'),
-                    
+                    genderFilter: transformFilter(action.payload.products, 'gender'),    
+                    loader: false,                
                 }
         default:
             return state;
